@@ -1,20 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-title>
-     Grocery app
+      Capture Videos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <!-- Display the video stream while capturing -->
+  <video class="video" #video autoplay playsinline muted [hidden]="!isRecording"></video>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <!-- Neccessary for the video player -->
+  <div id="fullscreen" slot="fixed"></div>
+
+  <ion-list *ngIf="!isRecording">
+    <ion-item *ngFor="let video of videos;" (click)="play(video)" tappable>
+      {{ video }}
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="isRecording ? stopRecord() : recordVideo()">
+      <ion-icon [name]="isRecording ? 'stop' : 'videocam'"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
